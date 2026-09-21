@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>smart class™ — AI-Powered Training Platform</title>
+    <meta name="description" content="smart class™ automates paperwork, delivers digital assessments, and gives trainers real-time insights — so you can focus on teaching.">
+    <!-- Favicon -->
+    <link href="assets/images/favicon.png" rel="icon">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5.3.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        /* =============================================
+           DESIGN TOKENS
+        ============================================= */
+        :root {
+            --bg-primary: #070B14;
+            --bg-secondary: #0D1220;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --accent-blue: #41C1F0;
+            --accent-purple: #8B5CF6;
+            --gradient: linear-gradient(135deg, #41C1F0 0%, #8B5CF6 100%);
+            --text-primary: #F1F5F9;
+            --text-muted: #94A3B8;
+            --card-border: rgba(255, 255, 255, 0.08);
+            --glow-blue: 0 0 60px rgba(65, 193, 240, 0.15);
+            --glow-purple: 0 0 60px rgba(139, 92, 246, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        /* =============================================
+           BASE
+        ============================================= */
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.65;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        /* =============================================
+           PAGE LOADER
+        ============================================= */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        #page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #page-loader img {
+            width: 64px;
+            height: 64px;
+            animation: loaderPulse 1.2s ease-in-out infinite;
+        }
+
+        #page-loader .loader-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.05em;
+        }
+
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.8; }
+        }
+
+        /* =============================================
+           SCROLL TO TOP
+        ============================================= */
+        #scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #fff;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 900;
+            box-shadow: 0 4px 20px rgba(65, 193, 240, 0.4);
+        }
+
+        #scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #scroll-top:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =============================================
+           UTILITY
+        ============================================= */
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            border-radius: 100px;
+            border: 1px solid rgba(65, 193, 240, 0.35);
+            background: rgba(65, 193, 240, 0.08);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.7;
+        }
+
+        /* =============================================
+           HEADER / NAV
+        ============================================= */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 800;
+            padding: 0 24px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            transition: background 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(7, 11, 20, 0.95);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-wrap img {
+            height: 36px;
+            width: auto;
+        }
+
+        .logo-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-demo {
+            padding: 9px 22px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(65, 193, 240, 0.35);
+            color: #fff;
+        }
+
+        /* Mobile hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px;
+            border: none;
+            background: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: rgba(7, 11, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 24px;
+            z-index: 799;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav .btn-demo {
+            display: inline-block;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 991px) {
+            .nav-links, .header-cta {
+                display: none !important;
+            }
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* =============================================
+           HERO SECTION
+        ============================================= */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding-top: 72px;
+        }
+
+        /* Animated background blobs */
+        .hero-blobs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.18;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--accent-blue);
+            top: -120px;
+            right: -100px;
+            animation: blobFloat1 8s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-purple);
+            bottom: -80px;
+            left: -100px;
+            animation: blobFloat2 10s ease-in-out infinite;
+        }
+
+        .blob-3 {
+            width: 280px;
+            height: 280px;
+            background: var(--accent-blue);
+            top: 40%;
+            left: 40%;
+            opacity: 0.1;
+            animation: blobFloat3 12s ease-in-out infinite;
+        }
+
+        @keyframes blobFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-30px, 30px) scale(1.05); }
+            66% { transform: translate(20px, -20px) scale(0.95); }
+        }
+
+        @keyframes blobFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -30px) scale(1.08); }
+            66% { transform: translate(-20px, 20px) scale(0.97); }
+        }
+
+        @keyframes blobFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-40px, 40px) scale(1.1); }
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 20px;
+            border-radius: 100px;
+            border: 1px solid rgba(65, 193, 240, 0.4);
+            background: rgba(65, 193, 240, 0.07);
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-bottom: 28px;
+            letter-spacing: 0.03em;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.12;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 56px;
+        }
+
+        .btn-outline-hero {
+            padding: 11px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: var(--text-primary);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-outline-hero:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .btn-primary-hero {
+            padding: 11px 28px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(65, 193, 240, 0.4);
+            color: #fff;
+        }
+
+        /* Stats row */
+        .hero-stats {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            padding: 0 28px;
+            border-right: 1px solid var(--card-border);
+        }
+
+        .hero-stat:first-child {
+            padding-left: 0;
+        }
+
+        .hero-stat:last-child {
+            border-right: none;
+        }
+
+        .hero-stat .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-stat .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* Hero image card / shimmer */
+        .hero-image-wrap {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .shimmer-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.4s ease;
+            box-shadow:
+                0 0 0 1px rgba(65, 193, 240, 0.1),
+                0 24px 60px rgba(0, 0, 0, 0.5),
+                var(--glow-blue);
+        }
+
+        .shimmer-card:hover {
+            transform: rotate(0deg) scale(1.01);
+        }
+
+        .shimmer-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(
+                135deg,
+                rgba(65, 193, 240, 0.08) 0%,
+                transparent 50%,
+                rgba(139, 92, 246, 0.08) 100%
+            );
+            pointer-events: none;
+        }
+
+        .shimmer-card img {
+            border-radius: 12px;
+            display: block;
+            max-width: 100%;
+        }
+
+        /* Floating accent dots */
+        .hero-dot {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gradient);
+        }
+
+        .hero-dot-1 {
+            width: 8px;
+            height: 8px;
+            top: -12px;
+            right: 40px;
+            animation: dotFloat 3s ease-in-out infinite;
+        }
+
+        .hero-dot-2 {
+            width: 12px;
+            height: 12px;
+            bottom: 20px;
+            left: -16px;
+            animation: dotFloat 4s ease-in-out infinite 1s;
+        }
+
+        @keyframes dotFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* =============================================
+           TRUST / LOGOS BAR
+        ============================================= */
+        .trust-bar {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+            padding: 36px 0;
+        }
+
+        .trust-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .trust-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .trust-logo-pill {
+            padding: 10px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+            transition: var(--transition);
+        }
+
+        .trust-logo-pill:hover {
+            border-color: rgba(65, 193, 240, 0.3);
+            color: var(--text-primary);
+            background: rgba(65, 193, 240, 0.05);
+        }
+
+        /* =============================================
+           COMPARISON SECTION
+        ============================================= */
+        .comparison-section {
+            background: var(--bg-primary);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 767px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Traditional card */
+        .card-traditional {
+            background: rgba(255, 60, 60, 0.04);
+            border: 1px solid rgba(255, 80, 80, 0.15);
+            border-radius: 20px;
+            padding: 36px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-traditional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .card-header-traditional {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .card-header-traditional .icon-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(239, 68, 68, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-size: 1.2rem;
+        }
+
+        .card-header-traditional h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        /* Smart card */
+        .card-smart {
+            background: rgba(65, 193, 240, 0.04);
+            border: 1px solid rgba(65, 193, 240, 0.2);
+            border-radius: 20px;
+            padding: 36px 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--glow-blue);
+        }
+
+        .card-smart::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient);
+        }
+
+        .card-header-smart {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .card-header-smart .icon-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .card-header-smart h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .comparison-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .comparison-list li .li-icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .comparison-list li .li-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .li-check {
+            flex-shrink: 0;
+            margin-top: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #fff;
+        }
+
+        .card-smart .comparison-list li {
+            color: var(--text-primary);
+        }
+
+        /* =============================================
+           FEATURES SECTION
+        ============================================= */
+        .features-section {
+            background: var(--bg-secondary);
+        }
+
+        .feature-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 991px) {
+            .feature-cards-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(65, 193, 240, 0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(65, 193, 240, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), var(--glow-blue);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 24px;
+        }
+
+        .feature-card-img {
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 1px solid var(--card-border);
+        }
+
+        .feature-card-img img {
+            max-height: 220px;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        /* =============================================
+           HOW IT WORKS
+        ============================================= */
+        .how-works-section {
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        /* Dot grid background */
+        .how-works-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+
+        .how-works-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .steps-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-top: 16px;
+            position: relative;
+        }
+
+        /* Connector line on desktop */
+        .steps-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 52px;
+            left: calc(12.5% + 26px);
+            right: calc(12.5% + 26px);
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(65, 193, 240, 0.35) 0,
+                rgba(65, 193, 240, 0.35) 8px,
+                transparent 8px,
+                transparent 20px
+            );
+        }
+
+        @media (max-width: 767px) {
+            .steps-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .steps-wrapper::before {
+                display: none;
+            }
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 24px 20px;
+        }
+
+        .step-number-wrap {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            margin-bottom: 24px;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .step-circle::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 2px solid rgba(65, 193, 240, 0.25);
+        }
+
+        .step-num-label {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 100px;
+            padding: 2px 7px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .step-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step-item p {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 180px;
+            margin: 0 auto;
+        }
+
+        /* =============================================
+           FEATURE SHOWCASE (TABS)
+        ============================================= */
+        .showcase-section {
+            background: var(--bg-secondary);
+        }
+
+        /* Parent tabs */
+        .showcase-tabs-parent {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0;
+        }
+
+        .showcase-tab-btn {
+            padding: 12px 24px;
+            border-radius: 8px 8px 0 0;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .showcase-tab-btn.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+            background: rgba(65, 193, 240, 0.05);
+        }
+
+        .showcase-tab-btn:hover:not(.active) {
+            color: var(--text-primary);
+        }
+
+        /* Tab panes */
+        .showcase-pane {
+            display: none;
+        }
+
+        .showcase-pane.active {
+            display: block;
+        }
+
+        /* Child tabs (pills) — vertical */
+        .tabs-heading {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .nav-pills-dark {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-pills-dark li a {
+            display: block;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-pills-dark li a:hover {
+            border-color: rgba(65, 193, 240, 0.2);
+            color: var(--text-primary);
+        }
+
+        .nav-pills-dark li a.active {
+            border-color: rgba(65, 193, 240, 0.4);
+            background: rgba(65, 193, 240, 0.08);
+            color: var(--text-primary);
+        }
+
+        .nav-pills-dark li a svg {
+            fill: var(--text-muted);
+        }
+
+        .nav-pills-dark li a.active svg {
+            fill: var(--accent-blue);
+        }
+
+        /* Tab content area */
+        .showcase-content-area {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            min-height: 400px;
+        }
+
+        .showcase-content-area .tab-content-inner {
+            height: 100%;
+        }
+
+        .showcase-content-area p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .showcase-content-area img {
+            border-radius: 10px;
+        }
+
+        /* =============================================
+           CTA SECTION
+        ============================================= */
+        .cta-section {
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .cta-section .cta-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .btn-cta-white {
+            padding: 16px 44px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            background: #fff;
+            color: var(--bg-primary);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .btn-cta-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+            color: var(--bg-primary);
+        }
+
+        .trust-signals {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .trust-signal {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .trust-signal .ts-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        /* =============================================
+           FOOTER
+        ============================================= */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--card-border);
+            padding: 64px 0 0;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .footer-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .footer-logo span {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .footer-tagline {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .footer-col-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-contact p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .footer-contact a {
+            color: var(--accent-blue);
+            transition: opacity 0.2s ease;
+        }
+
+        .footer-contact a:hover {
+            opacity: 0.8;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--card-border);
+            margin-top: 48px;
+            padding: 24px 0;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        /* =============================================
+           MODALS — DARK THEME
+        ============================================= */
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            color: var(--text-primary);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--card-border);
+            padding: 20px 24px;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .btn-close {
+            filter: invert(1) opacity(0.6);
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        /* Video modal */
+        #videoModal .modal-content {
+            background: #000;
+            border-color: #333;
+        }
+
+        .modal-video-wrapper {
+            position: relative;
+        }
+
+        .close-video-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* =============================================
+           RESPONSIVE TWEAKS
+        ============================================= */
+        @media (max-width: 767px) {
+            .section {
+                padding: 60px 0;
+            }
+
+            .hero-stat {
+                padding: 0 16px;
+            }
+
+            .hero-stats {
+                gap: 0;
+            }
+
+            .showcase-tabs-parent {
+                flex-direction: column;
+                border-bottom: none;
+                gap: 4px;
+            }
+
+            .showcase-tab-btn {
+                border-radius: 8px;
+                border-bottom: none;
+                border: 1px solid var(--card-border);
+            }
+
+            .showcase-tab-btn.active {
+                border-color: var(--accent-blue);
+            }
+
+            .steps-wrapper {
+                gap: 16px;
+            }
+
+            .trust-signals {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .comparison-grid {
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Page Loader -->
+    <div id="page-loader">
+        <img src="assets/images/appicon final updated.png" alt="smart class loading">
+        <div class="loader-text">smart class™</div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a href="#" id="scroll-top"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- =============================================
+         HEADER
+    ============================================= -->
+    <header class="header" id="main-header">
+        <div class="header-inner">
+            <a href="#hero" class="logo-wrap" onclick="scrollToSection(event,'hero')">
+                <img src="assets/images/appicon final updated.png" alt="smart class logo">
+                <span class="logo-name">smart class™</span>
+            </a>
+
+            <ul class="nav-links d-none d-lg-flex">
+                <li><a href="#features" onclick="scrollToSection(event,'features')">Features</a></li>
+                <li><a href="#how-it-works" onclick="scrollToSection(event,'how-it-works')">How it Works</a></li>
+                <li><a href="#showcase" onclick="scrollToSection(event,'showcase')">Demo</a></li>
+            </ul>
+
+            <div class="header-cta d-none d-lg-flex">
+                <button class="btn-demo" data-bs-toggle="modal" data-bs-target="#requestDemo">Request a Demo</button>
+            </div>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Nav -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="#features" onclick="closeMobileNav();scrollToSection(event,'features')">Features</a>
+        <a href="#how-it-works" onclick="closeMobileNav();scrollToSection(event,'how-it-works')">How it Works</a>
+        <a href="#showcase" onclick="closeMobileNav();scrollToSection(event,'showcase')">Demo</a>
+        <button class="btn-demo" data-bs-toggle="modal" data-bs-target="#requestDemo" onclick="closeMobileNav()">Request a Demo</button>
+    </nav>
+
+    <main>
+
+        <!-- =============================================
+             HERO SECTION
+        ============================================= -->
+        <section class="hero" id="hero">
+            <!-- Animated background blobs -->
+            <div class="hero-blobs">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+                <div class="blob blob-3"></div>
+            </div>
+
+            <div class="container-xl container-fluid">
+                <div class="row align-items-center gy-5">
+                    <!-- Text col -->
+                    <div class="col-12 col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                        <div class="hero-badge">
+                            <span>✦</span> AI-Powered Training Platform
+                        </div>
+                        <h1>
+                            The smarter way<br>to train, assess<br>
+                            <span class="gradient-text">&amp; certify</span>
+                        </h1>
+                        <p class="hero-sub">
+                            smart class™ automates paperwork, delivers digital assessments, and gives trainers real-time insights — so you can focus on teaching.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn-primary-hero" data-bs-toggle="modal" data-bs-target="#requestDemo">
+                                Request a Demo
+                            </button>
+                            <button class="btn-outline-hero" data-bs-toggle="modal" data-bs-target="#videoModal">
+                                <i class="bi bi-play-circle-fill"></i> Watch a demo
+                            </button>
+                        </div>
+                        <!-- Stats -->
+                        <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                            <div class="hero-stat">
+                                <div class="stat-number">800,000</div>
+                                <div class="stat-label">Pages saved annually</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="stat-number">10+</div>
+                                <div class="stat-label">Hours saved per trainer</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="stat-number">24hrs</div>
+                                <div class="stat-label">Average results turnaround</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image col -->
+                    <div class="col-12 col-lg-6 d-flex justify-content-center justify-content-lg-end" data-aos="zoom-out" data-aos-delay="200">
+                        <div class="hero-image-wrap">
+                            <div class="shimmer-card">
+                                <div class="hero-dot hero-dot-1"></div>
+                                <div class="hero-dot hero-dot-2"></div>
+                                <img src="assets/images/smart-tech.png" alt="smart class technology" style="max-width: 460px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             TRUST BAR
+        ============================================= -->
+        <section class="trust-bar">
+            <div class="container text-center">
+                <p class="trust-label">Trusted by training centres across the UK</p>
+                <div class="trust-logos">
+                    <div class="trust-logo-pill">Highfield Awarding Body</div>
+                    <div class="trust-logo-pill">TQUK</div>
+                    <div class="trust-logo-pill">ProQual</div>
+                    <div class="trust-logo-pill">Vtct</div>
+                    <div class="trust-logo-pill">City &amp; Guilds</div>
+                    <div class="trust-logo-pill">Pearson</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             COMPARISON SECTION
+        ============================================= -->
+        <section class="comparison-section section" id="comparison">
+            <div class="container-xl container-fluid">
+                <div class="text-center" data-aos="fade-up">
+                    <div class="section-badge mx-auto">The smart class™ difference</div>
+                    <h2 class="section-title">From paper chaos to digital clarity</h2>
+                    <p class="section-subtitle">See how smart class™ replaces outdated, error-prone training processes with a seamless digital experience.</p>
+                </div>
+
+                <div class="comparison-grid" data-aos="fade-up" data-aos-delay="150">
+                    <!-- Traditional -->
+                    <div class="card-traditional">
+                        <div class="card-header-traditional">
+                            <div class="icon-badge">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                            <h3>Traditional Training</h3>
+                        </div>
+                        <ul class="comparison-list">
+                            <li>
+                                <span class="li-icon"><img src="assets/images/block.svg" alt="block"></span>
+                                Scattered PDF files, hard to read on mobile. No structured learning.
+                            </li>
+                            <li>
+                                <span class="li-icon"><img src="assets/images/block.svg" alt="block"></span>
+                                20+ manual signatures required. Missing one can void results.
+                            </li>
+                            <li>
+                                <span class="li-icon"><img src="assets/images/block.svg" alt="block"></span>
+                                Paper-based assessments — missing details can lead to recalls.
+                            </li>
+                            <li>
+                                <span class="li-icon"><img src="assets/images/block.svg" alt="block"></span>
+                                Paper-based exams, risk of errors, tampering, and lost results.
+                            </li>
+                            <li>
+                                <span class="li-icon"><img src="assets/images/block.svg" alt="block"></span>
+                                10–14 days for results due to manual processing.
+                            </li>
+                            <li>
+                                <span class="li-icon"><img src="assets/images/block.svg" alt="block"></span>
+                                No quizzes, mock exams, or interactive tools.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Smart class -->
+                    <div class="card-smart">
+                        <div class="card-header-smart">
+                            <div class="icon-badge">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <h3 class="gradient-text">smart class™ technology</h3>
+                        </div>
+                        <ul class="comparison-list">
+                            <li>
+                                <span class="li-check"><i class="bi bi-check"></i></span>
+                                Mobile app with high-quality video content, like Netflix for learning.
+                            </li>
+                            <li>
+                                <span class="li-check"><i class="bi bi-check"></i></span>
+                                Digital paperwork with automatic checks — no admin errors.
+                            </li>
+                            <li>
+                                <span class="li-check"><i class="bi bi-check"></i></span>
+                                Digital assessments, error-free and validated instantly.
+                            </li>
+                            <li>
+                                <span class="li-check"><i class="bi bi-check"></i></span>
+                                Digital exams, securely connected to the exam server — no delays.
+                            </li>
+                            <li>
+                                <span class="li-check"><i class="bi bi-check"></i></span>
+                                Results within 24 hours — fast and efficient.
+                            </li>
+                            <li>
+                                <span class="li-check"><i class="bi bi-check"></i></span>
+                                Quizzes, mock exams, and video lessons for better preparation.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             FEATURES SECTION
+        ============================================= -->
+        <section class="features-section section" id="features">
+            <div class="container-xl container-fluid">
+                <div class="text-center" data-aos="fade-up">
+                    <div class="section-badge mx-auto">Platform Features</div>
+                    <h2 class="section-title">One platform. Three powerful views.</h2>
+                    <p class="section-subtitle">Whether you're a learner, trainer, or administrator — smart class™ has a purpose-built experience tailored for you.</p>
+                </div>
+
+                <div class="feature-cards-grid">
+                    <!-- Learner View -->
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon-wrap">
+                            <i class="bi bi-mortarboard-fill"></i>
+                        </div>
+                        <h3>Learner View</h3>
+                        <p>Access coursework, complete assessments, receive instant feedback. Everything learners need in one mobile app — beautifully designed.</p>
+                        <div class="feature-card-img">
+                            <img src="assets/images/learner_view_mb.svg" alt="Learner View">
+                        </div>
+                    </div>
+
+                    <!-- Tutor View -->
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon-wrap">
+                            <i class="bi bi-person-check-fill"></i>
+                        </div>
+                        <h3>Trainer &amp; Tutor View</h3>
+                        <p>AI-powered assessment tools offer auto-grading suggestions and real-time performance insights for every learner in your cohort.</p>
+                        <div class="feature-card-img">
+                            <img src="assets/images/tutor_view.svg" alt="Tutor View">
+                        </div>
+                    </div>
+
+                    <!-- Engagement Tools -->
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon-wrap">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <h3>Engagement Tools</h3>
+                        <p>Inbuilt quizzes, live assessments, and gamified content keep learners motivated and engaged throughout their entire course.</p>
+                        <div class="feature-card-img">
+                            <img src="assets/images/engagement_tool_mb.png" alt="Engagement Tools">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             HOW IT WORKS
+        ============================================= -->
+        <section class="how-works-section section" id="how-it-works">
+            <div class="container-xl container-fluid">
+                <div class="text-center" data-aos="fade-up">
+                    <div class="section-badge mx-auto">How it Works</div>
+                    <h2 class="section-title">From enrolment to certification — fully digital</h2>
+                    <p class="section-subtitle">Four simple steps to transform your training delivery. No paperwork. No delays. Just results.</p>
+                </div>
+
+                <div class="steps-wrapper">
+                    <!-- Step 1 -->
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="step-number-wrap">
+                            <div class="step-circle">
+                                <i class="bi bi-person-plus-fill"></i>
+                            </div>
+                            <span class="step-num-label">01</span>
+                        </div>
+                        <h4>Enrol</h4>
+                        <p>Candidates join instantly via the smart class™ mobile app — no paperwork required.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="step-number-wrap">
+                            <div class="step-circle">
+                                <i class="bi bi-play-circle-fill"></i>
+                            </div>
+                            <span class="step-num-label">02</span>
+                        </div>
+                        <h4>Learn</h4>
+                        <p>Access structured video content, resources, and coursework on any device, anywhere.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="step-number-wrap">
+                            <div class="step-circle">
+                                <i class="bi bi-clipboard-check-fill"></i>
+                            </div>
+                            <span class="step-num-label">03</span>
+                        </div>
+                        <h4>Assess</h4>
+                        <p>Complete digital assessments and exams — validated instantly, error-free, securely connected to the exam server.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="step-number-wrap">
+                            <div class="step-circle">
+                                <i class="bi bi-patch-check-fill"></i>
+                            </div>
+                            <span class="step-num-label">04</span>
+                        </div>
+                        <h4>Certify</h4>
+                        <p>Certificates issued and results delivered within 24 hours. Fast, reliable, fully digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             FEATURE SHOWCASE (TABS)
+        ============================================= -->
+        <section class="showcase-section section" id="showcase">
+            <div class="container-xl container-fluid">
+                <div class="text-center" data-aos="fade-up">
+                    <div class="section-badge mx-auto">Platform Demo</div>
+                    <h2 class="section-title">Reimagine training with AI-driven tools</h2>
+                </div>
+
+                <!-- Parent tabs -->
+                <div class="showcase-tabs-parent" data-aos="fade-up" data-aos-delay="100">
+                    <button class="showcase-tab-btn active" data-target="pane-smartclass">Smart Class Demo</button>
+                    <button class="showcase-tab-btn" data-target="pane-assessment">Assessment &amp; Certification</button>
+                </div>
+
+                <!-- Pane 1: Smart Class -->
+                <div class="showcase-pane active" id="pane-smartclass" data-aos="fade-up" data-aos-delay="150">
+                    <div class="row">
+                        <!-- Left: child nav -->
+                        <div class="col-xl-5 col-lg-5 mb-4 mb-lg-0">
+                            <div class="tabs-heading">Scenarios</div>
+                            <ul class="nav-pills-dark" id="sc-tab-child">
+                                <li>
+                                    <a class="active" href="#sc-feature" data-child="sc">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.9794 13.0987L16.1794 11.768L18.3794 13.0987C18.5043 13.1705 18.6214 13.1684 18.7307 13.0924C18.8403 13.0161 18.8728 12.9088 18.8284 12.7704L18.2334 10.2627L20.1591 8.59103C20.2615 8.49703 20.2961 8.39314 20.2627 8.27936C20.2294 8.16581 20.1435 8.09792 20.0051 8.0757L17.4641 7.85503L16.4537 5.50137C16.4093 5.37648 16.3178 5.31403 16.1794 5.31403C16.0409 5.31403 15.9495 5.37648 15.9051 5.50137L14.8951 7.85503L12.3541 8.0757C12.2156 8.09792 12.1297 8.16581 12.0964 8.27936C12.0631 8.39314 12.0976 8.49703 12.2001 8.59103L14.1257 10.2627L13.5307 12.7704C13.4863 12.9088 13.5188 13.0161 13.6284 13.0924C13.7377 13.1684 13.8547 13.1705 13.9794 13.0987ZM9.10273 19.3064C8.42917 19.3064 7.85906 19.073 7.39239 18.6064C6.92572 18.1397 6.69239 17.5696 6.69239 16.896V2.74236C6.69239 2.06881 6.92572 1.4987 7.39239 1.03203C7.85906 0.565365 8.42917 0.332031 9.10273 0.332031H23.2564C23.9299 0.332031 24.5001 0.565365 24.9667 1.03203C25.4334 1.4987 25.6667 2.06881 25.6667 2.74236V16.896C25.6667 17.5696 25.4334 18.1397 24.9667 18.6064C24.5001 19.073 23.9299 19.3064 23.2564 19.3064H9.10273Z" fill=""/></svg>
+                                                Feature Highlight
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#sc-learner" data-child="sc">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.666748 20.8145V11.1915C0.666748 10.6342 0.87197 10.1688 1.28241 9.79551C1.69264 9.42195 2.17719 9.2574 2.73608 9.30184C4.47453 9.56851 6.1253 10.0852 7.68841 10.8518C9.25175 11.6185 10.689 12.5958 12.0001 13.7838C13.3112 12.5958 14.7484 11.6185 16.3117 10.8518C17.8749 10.0852 19.5256 9.56851 21.2641 9.30184C21.823 9.2574 22.3075 9.42195 22.7177 9.79551C23.1282 10.1688 23.3334 10.6342 23.3334 11.1915V20.8145C23.3334 21.3461 23.1577 21.8021 22.8064 22.1825C22.4551 22.5627 22.0136 22.7751 21.4821 22.8195C19.9914 23.0504 18.5773 23.4193 17.2397 23.9262C15.9022 24.4328 14.6214 25.117 13.3974 25.9785C13.1872 26.1443 12.9664 26.2665 12.7351 26.3452C12.5035 26.4238 12.2582 26.4632 11.9991 26.4632C11.74 26.4632 11.495 26.4238 11.2641 26.3452C11.0334 26.2665 10.813 26.1443 10.6027 25.9785C9.37875 25.117 8.10008 24.4328 6.76675 23.9262C5.43341 23.4193 4.01719 23.0504 2.51808 22.8195C1.98653 22.7751 1.54508 22.5627 1.19375 22.1825C0.842415 21.8021 0.666748 21.3461 0.666748 20.8145Z" fill=""/></svg>
+                                                Learner View
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#sc-tutor" data-child="sc">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 28 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26 23.052V2.74432C26 2.62454 25.9616 2.52621 25.8847 2.44932C25.8078 2.37243 25.7094 2.33398 25.5897 2.33398H2.41033C2.29056 2.33398 2.19222 2.37243 2.11533 2.44932C2.03844 2.52621 2 2.62454 2 2.74432V12.0007C2 12.284 1.90411 12.5214 1.71233 12.713C1.52056 12.9048 1.283 13.0007 0.999667 13.0007C0.716111 13.0007 0.478667 12.9048 0.287333 12.713C0.0957779 12.5214 0 12.284 0 12.0007V2.74432C0 2.08143 0.236 1.51398 0.708 1.04198C1.18 0.569984 1.74744 0.333984 2.41033 0.333984H25.5897C26.2526 0.333984 26.82 0.569984 27.292 1.04198C27.764 1.51398 28 2.08143 28 2.74432V20.8083C28 21.3879 27.8072 21.8917 27.4217 22.3197C27.0363 22.7479 26.5624 22.992 26 23.052Z" fill=""/></svg>
+                                                Tutor View
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#sc-engagement" data-child="sc">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24.6033L8.10265 25.9237C7.9642 25.9681 7.83254 25.9993 7.70765 26.0173C7.58298 26.0353 7.4582 26.0443 7.33331 26.0443C6.69065 26.0443 6.12832 25.8178 5.64632 25.3647C5.16409 24.9118 4.92298 24.3349 4.92298 23.634V16.8803L1.25131 10.939C1.12643 10.7339 1.03498 10.5253 0.976982 10.3133C0.918759 10.1015 0.889648 9.88621 0.889648 9.66732C0.889648 9.44843 0.918759 9.2331 0.976982 9.02132C1.03498 8.80932 1.12643 8.60076 1.25131 8.39565L5.52832 1.47265C5.74698 1.10665 6.03709 0.825428 6.39865 0.628984C6.7602 0.432317 7.15298 0.333984 7.57698 0.333984H16.423C16.847 0.333984 17.2398 0.432317 17.6013 0.628984C17.9629 0.825428 18.253 1.10665 18.4716 1.47265L22.7486 8.39565C22.8735 8.60076 22.965 8.80932 23.023 9.02132C23.0812 9.2331 23.1103 9.44843 23.1103 9.66732C23.1103 9.88621 23.0812 10.1015 23.023 10.3133C22.965 10.5253 22.8735 10.7339 22.7486 10.939L19.077 16.8803V23.634C19.077 24.3349 18.8359 24.9118 18.3536 25.3647C17.8716 25.8178 17.3093 26.0443 16.6666 26.0443C16.5418 26.0443 16.417 26.0353 16.2923 26.0173C16.1674 25.9993 16.0358 25.9681 15.8973 25.9237L12 24.6033Z" fill=""/></svg>
+                                                Engagement Tools
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Right: content -->
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="showcase-content-area" id="sc-child-content">
+                                <div id="sc-feature" class="tab-content-inner d-flex flex-column gap-3">
+                                    <p>Preview an English Assessment from both the learner's and tutor's perspectives.</p>
+                                    <div class="d-flex gap-3 justify-content-lg-between justify-content-end">
+                                        <img src="assets/images/mobile_assessments.svg" class="img-fluid d-lg-block d-none" alt="Mobile Assessment" style="max-height:340px">
+                                        <img src="assets/images/web_assesment.svg" class="img-fluid d-lg-block d-none" alt="Web Assessment" style="max-height:340px">
+                                        <img src="assets/images/web_assesment_mb.svg" class="img-fluid d-lg-none" alt="Web Assessment Mobile" style="max-height:300px">
+                                    </div>
+                                </div>
+                                <div id="sc-learner" class="tab-content-inner d-none flex-column gap-3">
+                                    <p>Access coursework, complete assessments, receive instant feedback.</p>
+                                    <div class="d-flex gap-3 justify-content-lg-start justify-content-end">
+                                        <img src="assets/images/learner_view_01.svg" class="img-fluid d-lg-block d-none" alt="Learner View 01" style="max-height:340px">
+                                        <img src="assets/images/learner_view_02.svg" class="img-fluid d-lg-block d-none" alt="Learner View 02" style="max-height:340px">
+                                        <img src="assets/images/learner_view_mb.svg" class="img-fluid d-lg-none" alt="Learner View Mobile" style="max-height:300px">
+                                    </div>
+                                </div>
+                                <div id="sc-tutor" class="tab-content-inner d-none flex-column gap-3">
+                                    <p>AI-powered assessment tools offer auto-grading suggestions and performance insights.</p>
+                                    <div class="d-flex gap-3 justify-content-end">
+                                        <img src="assets/images/tutor_view.svg" class="img-fluid" alt="Tutor View" style="max-height:340px">
+                                    </div>
+                                </div>
+                                <div id="sc-engagement" class="tab-content-inner d-none flex-column gap-3">
+                                    <p>Inbuilt discussion forums, live quizzes, and gamified content to keep learners motivated.</p>
+                                    <div class="d-flex gap-3 justify-content-lg-between justify-content-end">
+                                        <img src="assets/images/engagement_tool_01.png" class="img-fluid d-lg-block d-none" alt="Engagement Tool 01" style="max-width:230px">
+                                        <img src="assets/images/engagement_tool_02.svg" class="img-fluid d-lg-block d-none" alt="Engagement Tool 02" style="max-height:340px">
+                                        <img src="assets/images/engagement_tool_mb.png" class="img-fluid d-lg-none" alt="Engagement Tool Mobile" style="max-width:320px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pane 2: Assessment & Certification -->
+                <div class="showcase-pane" id="pane-assessment">
+                    <div class="row">
+                        <!-- Left: child nav -->
+                        <div class="col-xl-5 col-lg-5 mb-4 mb-lg-0">
+                            <div class="tabs-heading">Compliance Advantage</div>
+                            <ul class="nav-pills-dark" id="cert-tab-child">
+                                <li>
+                                    <a class="active" href="#cert-errors" data-child="cert">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 20.7435C14.6949 20.7435 14.4391 20.6403 14.2327 20.4338C14.0262 20.2274 13.923 19.9716 13.923 19.6665C13.923 19.3614 14.0262 19.1056 14.2327 18.8991C14.4391 18.6927 14.6949 18.5895 15 18.5895C15.3051 18.5895 15.5609 18.6927 15.7674 18.8991C15.9738 19.1056 16.077 19.3614 16.077 19.6665C16.077 19.9716 15.9738 20.2274 15.7674 20.4338C15.5609 20.6403 15.3051 20.7435 15 20.7435ZM14 17.2561V11.9795L16 13.9791V17.2561H14ZM26.2924 20.4841L20.846 15.0588L15.0027 4.99981L13.4334 7.66647L11.9874 6.22047L15 0.999807L26.2924 20.4841ZM4.93336 22.3331H21.5027L11.013 11.8435L4.93336 22.3331ZM26.1717 27.0021L23.5027 24.3331H1.48736L9.56669 10.3971L0.964355 1.79481L2.38969 0.369141L27.5974 25.5768L26.1717 27.0021Z" fill=""/></svg>
+                                                Eliminates manual errors
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#cert-speed" data-child="cert">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 20 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.06678 21.2669L14.9668 13.0003H9.63345L10.6001 5.43361L4.43345 14.3336H9.06678L8.06678 21.2669ZM5.43612 25.5899L6.76945 16.3336H0.602783L11.5898 0.474609H13.2308L11.9104 11.0003H19.2434L7.07712 25.5899H5.43612Z" fill=""/></svg>
+                                                Speeds up certification issuance
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#cert-storage" data-child="cert">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <svg width="20" height="20" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.0001 7.94399C13.9436 7.94399 15.9005 7.66233 17.8707 7.09899C19.8407 6.53588 20.9822 5.94999 21.2951 5.34132C20.9906 4.68844 19.8611 4.07944 17.9064 3.51433C15.9517 2.94944 13.983 2.66699 12.0001 2.66699C10.0205 2.66699 8.05853 2.94177 6.11408 3.49133C4.16964 4.04088 3.02475 4.64044 2.67941 5.28999C3.0163 5.91577 4.15264 6.51455 6.08841 7.08633C8.02441 7.6581 9.99497 7.94399 12.0001 7.94399Z" fill=""/></svg>
+                                                Secure digital storage of records
+                                            </div>
+                                            <i class="bi bi-chevron-right"></i>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Right: content -->
+                        <div class="col-xl-7 col-lg-7">
+                            <div class="showcase-content-area" id="cert-child-content">
+                                <div id="cert-errors" class="tab-content-inner d-flex flex-column gap-3">
+                                    <p>Trainer inputs are reviewed to ensure accuracy — no more costly manual errors or recalls.</p>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <img src="assets/images/eliminate-errors.png" class="img-fluid" alt="Eliminate Errors" style="max-height:340px">
+                                    </div>
+                                </div>
+                                <div id="cert-speed" class="tab-content-inner d-none flex-column gap-3">
+                                    <p>Assessments are marked and reviewed within the course timeline to ensure readiness for the next steps.</p>
+                                    <div class="d-flex gap-3 justify-content-lg-between justify-content-end">
+                                        <img src="assets/images/certification-01.png" class="img-fluid d-lg-block d-none" alt="Certification 01" style="max-width:240px">
+                                        <img src="assets/images/certification-02.png" class="img-fluid d-lg-block d-none" alt="Certification 02" style="max-height:340px">
+                                        <img src="assets/images/certification_mb.png" class="img-fluid d-lg-none" alt="Certification Mobile" style="max-height:300px">
+                                    </div>
+                                </div>
+                                <div id="cert-storage" class="tab-content-inner d-none flex-column gap-3">
+                                    <p>Records are digitally stored and protected using trusted security measures.</p>
+                                    <div class="d-flex gap-3 justify-content-end">
+                                        <img src="assets/images/digital-storage.png" class="img-fluid" alt="Digital Storage" style="max-height:340px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =============================================
+             CTA SECTION
+        ============================================= -->
+        <section class="cta-section" id="cta">
+            <div class="container">
+                <h2 data-aos="fade-up">Ready to transform your training?</h2>
+                <p class="cta-sub" data-aos="fade-up" data-aos-delay="100">Join hundreds of training centres already using smart class™ technology</p>
+                <button class="btn-cta-white" data-bs-toggle="modal" data-bs-target="#requestDemo" data-aos="fade-up" data-aos-delay="150">
+                    Request a Demo Today
+                </button>
+                <div class="trust-signals" data-aos="fade-up" data-aos-delay="200">
+                    <div class="trust-signal">
+                        <span class="ts-check"><i class="bi bi-check"></i></span>
+                        No commitment required
+                    </div>
+                    <div class="trust-signal">
+                        <span class="ts-check"><i class="bi bi-check"></i></span>
+                        Full onboarding support
+                    </div>
+                    <div class="trust-signal">
+                        <span class="ts-check"><i class="bi bi-check"></i></span>
+                        GDPR compliant
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main><!-- /main -->
+
+    <!-- =============================================
+         FOOTER
+    ============================================= -->
+    <footer class="footer">
+        <div class="container-xl container-fluid">
+            <div class="row gy-5">
+                <!-- Brand -->
+                <div class="col-12 col-lg-4">
+                    <div class="footer-logo">
+                        <img src="assets/images/appicon final updated.png" alt="smart class logo">
+                        <span>smart class™</span>
+                    </div>
+                    <p class="footer-tagline">Powered by Qualhub Limited<br>AI-powered training for modern educators.</p>
+                </div>
+
+                <!-- Quick links -->
+                <div class="col-6 col-lg-2 offset-lg-2">
+                    <p class="footer-col-title">Quick Links</p>
+                    <ul class="footer-links">
+                        <li><a href="#features" onclick="scrollToSection(event,'features')">Features</a></li>
+                        <li><a href="#how-it-works" onclick="scrollToSection(event,'how-it-works')">How it Works</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#requestDemo">Request Demo</a></li>
+                        <li><a href="privacyPolicy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-6 col-lg-4">
+                    <p class="footer-col-title">Contact</p>
+                    <div class="footer-contact">
+                        <p><a href="mailto:support@qualhub.org">support@qualhub.org</a></p>
+                        <p>36 Scotts Road<br>Bromley, England<br>BR1 3QD</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-8">
+                        &copy; 2025 Qualhub Limited. All rights reserved. smart class™ is a product of Qualhub Limited.
+                    </div>
+                    <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">Made in the UK 🇬🇧</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =============================================
+         REQUEST DEMO MODAL
+    ============================================= -->
+    <div class="modal fade" id="requestDemo" tabindex="-1" aria-labelledby="requestDemoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="requestDemoLabel">Request a Demo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="hubspotFormContainer" class="p-3" style="min-height: 520px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================
+         VIDEO MODAL
+    ============================================= -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mx-auto" style="max-width: 400px;">
+            <div class="modal-content" style="background:#000;border-color:#333;">
+                <div class="modal-video-wrapper">
+                    <button type="button" class="close-video-btn" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                    <div class="wistia_responsive_padding" style="padding-top: 177.78%; position: relative;">
+                        <div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
+                            <script src="https://fast.wistia.com/embed/y65wmj6qk3.js" async type="module"></script>
+                            <iframe src="https://fast.wistia.net/embed/iframe/y65wmj6qk3"
+                                allowtransparency="true" frameborder="0" scrolling="no"
+                                class="wistia_embed" name="wistia_embed" allowfullscreen
+                                mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen
+                                width="100%" height="100%" style="border-radius:0.5rem;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================
+         JS: Bootstrap + AOS
+    ============================================= -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- HubSpot Forms -->
+    <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+
+    <script>
+        /* ============================================
+           AOS Init
+        ============================================ */
+        AOS.init({
+            duration: 700,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 60
+        });
+
+        /* ============================================
+           Page Loader
+        ============================================ */
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                const loader = document.getElementById('page-loader');
+                if (loader) loader.classList.add('hidden');
+            }, 600);
+        });
+
+        /* ============================================
+           Scroll to section
+        ============================================ */
+        function scrollToSection(event, id) {
+            if (event) event.preventDefault();
+            const el = document.getElementById(id);
+            if (el) {
+                const headerH = 72;
+                const top = el.getBoundingClientRect().top + window.scrollY - headerH;
+                window.scrollTo({ top, behavior: 'smooth' });
+                history.replaceState(null, null, window.location.pathname + window.location.search);
+            }
+        }
+
+        /* ============================================
+           Header scroll class
+        ============================================ */
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Scroll top button
+            const scrollTop = document.getElementById('scroll-top');
+            if (window.scrollY > 400) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
+        });
+
+        /* ============================================
+           Scroll top button
+        ============================================ */
+        document.getElementById('scroll-top').addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        /* ============================================
+           Mobile nav toggle
+        ============================================ */
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        hamburger.addEventListener('click', function () {
+            this.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+
+        function closeMobileNav() {
+            hamburger.classList.remove('open');
+            mobileNav.classList.remove('open');
+        }
+
+        /* ============================================
+           HubSpot form — load on modal open
+        ============================================ */
+        let hubspotLoaded = false;
+        document.getElementById('requestDemo').addEventListener('show.bs.modal', function () {
+            if (!hubspotLoaded && window.hbspt) {
+                hbspt.forms.create({
+                    portalId: "20130333",
+                    formId: "3914bafb-f18c-4e61-9961-948a37d3cc22",
+                    region: "na1",
+                    target: "#hubspotFormContainer"
+                });
+                hubspotLoaded = true;
+            }
+        });
+
+        /* ============================================
+           Parent Tab Switching (Feature Showcase)
+        ============================================ */
+        document.querySelectorAll('.showcase-tab-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                // Deactivate all parent tabs
+                document.querySelectorAll('.showcase-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+                document.querySelectorAll('.showcase-pane').forEach(function (p) { p.classList.remove('active'); });
+
+                // Activate clicked
+                btn.classList.add('active');
+                const target = document.getElementById(btn.dataset.target);
+                if (target) target.classList.add('active');
+
+                // Reset auto-switch
+                clearInterval(autoTimerSC);
+                clearInterval(autoTimerCert);
+                currentSCIndex = 0;
+                currentCertIndex = 0;
+
+                if (btn.dataset.target === 'pane-smartclass') {
+                    startAutoSwitchSC();
+                } else {
+                    startAutoSwitchCert();
+                }
+            });
+        });
+
+        /* ============================================
+           Child Tab Switching — Smart Class pane
+        ============================================ */
+        var scTabs = ['sc-feature', 'sc-learner', 'sc-tutor', 'sc-engagement'];
+        var currentSCIndex = 0;
+        var autoTimerSC;
+
+        function showSCTab(index) {
+            // Hide all
+            scTabs.forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) { el.classList.remove('d-flex'); el.classList.add('d-none'); }
+            });
+            // Show target
+            var target = document.getElementById(scTabs[index]);
+            if (target) { target.classList.remove('d-none'); target.classList.add('d-flex'); }
+
+            // Update nav pills
+            var links = document.querySelectorAll('#sc-tab-child a');
+            links.forEach(function (l) { l.classList.remove('active'); });
+            if (links[index]) links[index].classList.add('active');
+        }
+
+        function switchSC() {
+            currentSCIndex = (currentSCIndex + 1) % scTabs.length;
+            showSCTab(currentSCIndex);
+        }
+
+        function startAutoSwitchSC() {
+            clearInterval(autoTimerSC);
+            autoTimerSC = setInterval(switchSC, 5000);
+        }
+
+        // Manual click on SC child tabs
+        document.querySelectorAll('#sc-tab-child a').forEach(function (link, idx) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                clearInterval(autoTimerSC);
+                currentSCIndex = idx;
+                showSCTab(currentSCIndex);
+                startAutoSwitchSC();
+            });
+        });
+
+        /* ============================================
+           Child Tab Switching — Certification pane
+        ============================================ */
+        var certTabs = ['cert-errors', 'cert-speed', 'cert-storage'];
+        var currentCertIndex = 0;
+        var autoTimerCert;
+
+        function showCertTab(index) {
+            certTabs.forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) { el.classList.remove('d-flex'); el.classList.add('d-none'); }
+            });
+            var target = document.getElementById(certTabs[index]);
+            if (target) { target.classList.remove('d-none'); target.classList.add('d-flex'); }
+
+            var links = document.querySelectorAll('#cert-tab-child a');
+            links.forEach(function (l) { l.classList.remove('active'); });
+            if (links[index]) links[index].classList.add('active');
+        }
+
+        function switchCert() {
+            currentCertIndex = (currentCertIndex + 1) % certTabs.length;
+            showCertTab(currentCertIndex);
+        }
+
+        function startAutoSwitchCert() {
+            clearInterval(autoTimerCert);
+            autoTimerCert = setInterval(switchCert, 5000);
+        }
+
+        document.querySelectorAll('#cert-tab-child a').forEach(function (link, idx) {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                clearInterval(autoTimerCert);
+                currentCertIndex = idx;
+                showCertTab(currentCertIndex);
+                startAutoSwitchCert();
+            });
+        });
+
+        /* ============================================
+           Initialise on DOM ready
+        ============================================ */
+        document.addEventListener('DOMContentLoaded', function () {
+            // Show first SC tab
+            showSCTab(0);
+            startAutoSwitchSC();
+            // Cert tab will auto-switch only when that pane becomes active
+            showCertTab(0);
+        });
+    </script>
+</body>
+
+</html>
