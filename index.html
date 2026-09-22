@@ -724,7 +724,7 @@
             border-radius: 10px;
             overflow: hidden;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             aspect-ratio: 16/10;
         }
@@ -732,8 +732,9 @@
         .mockup-laptop-screen img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            padding: 20px;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
         }
 
         /* Phone mockup - overlapping */
@@ -1057,15 +1058,19 @@
         .bento-card.card-hero-feature .card-visual {
             margin-top: auto;
             border-radius: 16px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             backdrop-filter: blur(10px);
+            overflow: hidden;
         }
 
         .bento-card.card-hero-feature .card-visual img {
             width: 100%;
-            border-radius: 8px;
+            max-height: 220px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 10px;
             display: block;
         }
 
@@ -2609,7 +2614,7 @@
                             <!-- Laptop mockup -->
                             <div class="mockup-laptop">
                                 <div class="mockup-laptop-screen">
-                                    <img src="assets/images/tutor_view.svg" alt="Tutor dashboard">
+                                    <img src="assets/images/smartclass_portal.png" alt="smart class trainer portal">
                                 </div>
                             </div>
 
@@ -2684,7 +2689,7 @@
                         <h3>AI-assisted grading that learns your criteria</h3>
                         <p>Auto-grade multiple choice, get suggested marks for written responses, and let trainers review with a single click. Cut marking time by up to 70%.</p>
                         <div class="card-visual">
-                            <img src="assets/images/tutor_view.svg" alt="AI grading interface">
+                            <img src="assets/images/smartclass_portal.png" alt="AI grading interface in smart class portal">
                         </div>
                     </div>
 
