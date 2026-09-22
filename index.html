@@ -723,17 +723,14 @@
             background: #F0F9FF;
             border-radius: 10px;
             overflow: hidden;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            aspect-ratio: 16/10;
+            display: block;
+            aspect-ratio: 3022 / 1700;
         }
 
         .mockup-laptop-screen img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: top center;
+            object-fit: fill;
             display: block;
         }
 
@@ -1059,7 +1056,7 @@
             margin-top: auto;
             border-radius: 16px;
             background: rgba(255, 255, 255, 0.1);
-            padding: 12px;
+            padding: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
             backdrop-filter: blur(10px);
             overflow: hidden;
@@ -1067,9 +1064,7 @@
 
         .bento-card.card-hero-feature .card-visual img {
             width: 100%;
-            max-height: 220px;
-            object-fit: cover;
-            object-position: top center;
+            height: auto;
             border-radius: 10px;
             display: block;
         }
@@ -2622,7 +2617,7 @@
                             <div class="mockup-phone">
                                 <div class="mockup-phone-notch"></div>
                                 <div class="mockup-phone-screen">
-                                    <img src="assets/images/learner_view_mb.svg" alt="Learner mobile app">
+                                    <img src="assets/images/engagement_tool_mb.png" alt="Learner mobile app — leaderboard">
                                 </div>
                             </div>
 
@@ -2905,12 +2900,12 @@
                         <div class="phone-showcase-stage">
                             <div class="showcase-phone-back">
                                 <div class="showcase-phone-inner">
-                                    <img src="assets/images/engagement_tool_mb.png" alt="Engagement tools">
+                                    <img src="assets/images/certification_mb.png" alt="Assessment view">
                                 </div>
                             </div>
                             <div class="showcase-phone">
                                 <div class="showcase-phone-inner">
-                                    <img src="assets/images/learner_view_mb.svg" alt="Learner app">
+                                    <img src="assets/images/engagement_tool_mb.png" alt="Leaderboard on smart class mobile app">
                                 </div>
                             </div>
                         </div>
@@ -3055,33 +3050,28 @@
                         <div class="col-xl-7 col-lg-7">
                             <div class="showcase-content-area" id="sc-child-content">
                                 <div id="sc-feature" class="tab-content-inner d-flex flex-column gap-3">
-                                    <p>Preview an English Assessment from both the learner's and tutor's perspectives.</p>
-                                    <div class="d-flex gap-3 justify-content-lg-between justify-content-end">
-                                        <img src="assets/images/mobile_assessments.svg" class="img-fluid d-lg-block d-none" alt="Mobile Assessment" style="max-height:340px">
-                                        <img src="assets/images/web_assesment.svg" class="img-fluid d-lg-block d-none" alt="Web Assessment" style="max-height:340px">
-                                        <img src="assets/images/web_assesment_mb.svg" class="img-fluid d-lg-none" alt="Web Assessment Mobile" style="max-height:300px">
+                                    <p>Preview an assessment inside the smart class™ portal — one view for the trainer, another for the learner.</p>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <img src="assets/images/smartclass_portal.png" class="img-fluid" alt="smart class assessment view" style="max-height:340px; border-radius: 8px;">
                                     </div>
                                 </div>
                                 <div id="sc-learner" class="tab-content-inner d-none flex-column gap-3">
-                                    <p>Access coursework, complete assessments, receive instant feedback.</p>
-                                    <div class="d-flex gap-3 justify-content-lg-start justify-content-end">
-                                        <img src="assets/images/learner_view_01.svg" class="img-fluid d-lg-block d-none" alt="Learner View 01" style="max-height:340px">
-                                        <img src="assets/images/learner_view_02.svg" class="img-fluid d-lg-block d-none" alt="Learner View 02" style="max-height:340px">
-                                        <img src="assets/images/learner_view_mb.svg" class="img-fluid d-lg-none" alt="Learner View Mobile" style="max-height:300px">
+                                    <p>Learners get gamified progress tracking, leaderboards and instant feedback — everything they need to stay motivated.</p>
+                                    <div class="d-flex gap-3 justify-content-center align-items-center">
+                                        <img src="assets/images/engagement_tool_01.png" class="img-fluid" alt="Learner leaderboard" style="max-height:340px; border-radius: 12px;">
                                     </div>
                                 </div>
                                 <div id="sc-tutor" class="tab-content-inner d-none flex-column gap-3">
-                                    <p>AI-powered assessment tools offer auto-grading suggestions and performance insights.</p>
-                                    <div class="d-flex gap-3 justify-content-end">
-                                        <img src="assets/images/tutor_view.svg" class="img-fluid" alt="Tutor View" style="max-height:340px">
+                                    <p>AI-assisted grading and real-time cohort insights right from the smart class™ trainer portal.</p>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <img src="assets/images/smartclass_portal.png" class="img-fluid" alt="smart class trainer portal" style="max-height:340px; border-radius: 8px;">
                                     </div>
                                 </div>
                                 <div id="sc-engagement" class="tab-content-inner d-none flex-column gap-3">
-                                    <p>Inbuilt discussion forums, live quizzes, and gamified content to keep learners motivated.</p>
-                                    <div class="d-flex gap-3 justify-content-lg-between justify-content-end">
-                                        <img src="assets/images/engagement_tool_01.png" class="img-fluid d-lg-block d-none" alt="Engagement Tool 01" style="max-width:230px">
-                                        <img src="assets/images/engagement_tool_02.svg" class="img-fluid d-lg-block d-none" alt="Engagement Tool 02" style="max-height:340px">
-                                        <img src="assets/images/engagement_tool_mb.png" class="img-fluid d-lg-none" alt="Engagement Tool Mobile" style="max-width:320px">
+                                    <p>Inbuilt quizzes, live leaderboards and gamified content keep learners motivated throughout the course.</p>
+                                    <div class="d-flex gap-3 justify-content-center align-items-center">
+                                        <img src="assets/images/engagement_tool_01.png" class="img-fluid d-lg-block d-none" alt="Engagement leaderboard" style="max-width:280px; border-radius: 12px;">
+                                        <img src="assets/images/engagement_tool_mb.png" class="img-fluid d-lg-none" alt="Engagement leaderboard mobile" style="max-width:280px; border-radius: 12px;">
                                     </div>
                                 </div>
                             </div>
@@ -3149,9 +3139,9 @@
                                     </div>
                                 </div>
                                 <div id="cert-storage" class="tab-content-inner d-none flex-column gap-3">
-                                    <p>Records are digitally stored and protected using trusted security measures.</p>
-                                    <div class="d-flex gap-3 justify-content-end">
-                                        <img src="assets/images/digital-storage.png" class="img-fluid" alt="Digital Storage" style="max-height:340px">
+                                    <p>Records are digitally stored inside the smart class™ portal and protected with role-based access controls, encryption in transit, and secure audit-ready backups.</p>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <img src="assets/images/smartclass_portal.png" class="img-fluid" alt="Records in smart class portal" style="max-height:340px; border-radius: 8px;">
                                     </div>
                                 </div>
                             </div>
