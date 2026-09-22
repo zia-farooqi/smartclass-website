@@ -7,7 +7,7 @@
     <title>smart class™ — AI-Powered Training Platform</title>
     <meta name="description" content="smart class™ automates paperwork, delivers digital assessments, and gives trainers real-time insights — so you can focus on teaching.">
     <!-- Favicon -->
-    <link href="assets/images/favicon.png" rel="icon">
+    <link href="assets/images/appicon final updated.png" rel="icon">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -28,13 +28,13 @@
         :root {
             --bg-primary: #070B14;
             --bg-secondary: #0D1220;
-            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card: rgba(255, 255, 255, 0.07);
             --accent-blue: #41C1F0;
             --accent-purple: #8B5CF6;
             --gradient: linear-gradient(135deg, #41C1F0 0%, #8B5CF6 100%);
-            --text-primary: #F1F5F9;
-            --text-muted: #94A3B8;
-            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #FFFFFF;
+            --text-muted: #A8B9CC;
+            --card-border: rgba(255, 255, 255, 0.13);
             --glow-blue: 0 0 60px rgba(65, 193, 240, 0.15);
             --glow-purple: 0 0 60px rgba(139, 92, 246, 0.15);
             --transition: all 0.3s ease;
@@ -382,7 +382,7 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.18;
+            opacity: 0.28;
         }
 
         .blob-1 {
@@ -789,47 +789,55 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 10px;
         }
 
         .comparison-list li {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
+            gap: 14px;
+            font-size: 0.95rem;
+            color: #CBD5E1;
+            line-height: 1.6;
+            padding: 15px 18px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .comparison-list li .li-icon {
             flex-shrink: 0;
             margin-top: 2px;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
         }
 
         .comparison-list li .li-icon img {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
+            opacity: 0.75;
         }
 
         .li-check {
             flex-shrink: 0;
             margin-top: 2px;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: #fff;
         }
 
         .card-smart .comparison-list li {
-            color: var(--text-primary);
+            color: #E8F5FD;
+            background: rgba(65, 193, 240, 0.06);
+            border-color: rgba(65, 193, 240, 0.15);
         }
+
 
         /* =============================================
            FEATURES SECTION
@@ -1145,12 +1153,13 @@
             color: var(--text-primary);
         }
 
-        .nav-pills-dark li a svg {
-            fill: var(--text-muted);
+        .nav-pills-dark li a svg path {
+            fill: #A8B9CC;
+            transition: fill 0.2s ease;
         }
 
-        .nav-pills-dark li a.active svg {
-            fill: var(--accent-blue);
+        .nav-pills-dark li a.active svg path {
+            fill: #41C1F0;
         }
 
         /* Tab content area */
@@ -1571,22 +1580,6 @@
             </div>
         </section>
 
-        <!-- =============================================
-             TRUST BAR
-        ============================================= -->
-        <section class="trust-bar">
-            <div class="container text-center">
-                <p class="trust-label">Trusted by training centres across the UK</p>
-                <div class="trust-logos">
-                    <div class="trust-logo-pill">Highfield Awarding Body</div>
-                    <div class="trust-logo-pill">TQUK</div>
-                    <div class="trust-logo-pill">ProQual</div>
-                    <div class="trust-logo-pill">Vtct</div>
-                    <div class="trust-logo-pill">City &amp; Guilds</div>
-                    <div class="trust-logo-pill">Pearson</div>
-                </div>
-            </div>
-        </section>
 
         <!-- =============================================
              COMPARISON SECTION
@@ -1759,7 +1752,7 @@
                             <span class="step-num-label">02</span>
                         </div>
                         <h4>Learn</h4>
-                        <p>Access structured video content, resources, and coursework on any device, anywhere.</p>
+                        <p>Access structured video content, resources, and coursework on any device.</p>
                     </div>
 
                     <!-- Step 3 -->
