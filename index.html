@@ -552,7 +552,7 @@
         .hero h1 {
             font-size: clamp(2.6rem, 5.5vw, 4.4rem);
             font-weight: 800;
-            line-height: 1.05;
+            line-height: 1.2;
             margin-bottom: 28px;
             letter-spacing: -0.03em;
             color: #FFFFFF;
@@ -563,10 +563,11 @@
             position: relative;
             background: #FFFFFF;
             color: var(--brand-dark);
-            padding: 0 14px;
-            border-radius: 12px;
+            padding: 4px 18px;
+            border-radius: 14px;
             transform: rotate(-1deg);
-            margin: 0 4px;
+            margin: 12px 4px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         .hero-sub {
@@ -1073,25 +1074,132 @@
             background: linear-gradient(135deg, #29B6F6 0%, #0284C7 100%);
             color: #FFFFFF;
             border: none;
-            justify-content: center;
+            justify-content: space-between;
             text-align: left;
             min-height: 220px;
+            padding: 26px 28px;
             box-shadow: 0 20px 40px rgba(41, 182, 246, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card.card-stat::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.18), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-label-tag i {
+            font-size: 0.75rem;
+        }
+
+        .stat-icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #FFFFFF;
+            backdrop-filter: blur(10px);
         }
 
         .bento-card.card-stat .stat-big {
-            font-size: 3rem;
+            font-size: 3.4rem;
             font-weight: 800;
             line-height: 1;
             letter-spacing: -0.03em;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #FFFFFF;
+            position: relative;
+            z-index: 1;
         }
 
         .bento-card.card-stat .stat-desc {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.88rem;
             line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-bottom {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.85);
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-bottom .trend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            background: rgba(16, 185, 129, 0.25);
+            border-radius: 6px;
+            color: #A7F3D0;
+            font-weight: 700;
+            font-size: 0.72rem;
+        }
+
+        /* Mini bar chart in stat cards */
+        .stat-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 32px;
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-bar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+
+        .stat-bar.bar-highlight {
+            background: rgba(255, 255, 255, 0.75);
         }
 
         .bento-card.card-standard {
@@ -1303,7 +1411,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 520px;
+            min-height: 560px;
+            padding: 20px 0;
         }
 
         .phone-showcase-stage::before {
@@ -1311,7 +1420,9 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            max-width: 90%;
+            max-height: 90%;
+            background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%);
             border-radius: 50%;
         }
 
@@ -1325,7 +1436,8 @@
             box-shadow:
                 0 40px 100px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(255, 255, 255, 0.1);
-            width: 280px;
+            width: 260px;
+            flex-shrink: 0;
         }
 
         .showcase-phone-inner {
@@ -1334,13 +1446,16 @@
             overflow: hidden;
             aspect-ratio: 9/19;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .showcase-phone-inner img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
 
         .showcase-phone::before {
@@ -1359,20 +1474,49 @@
         /* Second phone floating behind */
         .showcase-phone-back {
             position: absolute;
-            width: 240px;
+            width: 220px;
             background: #0A1628;
             border: 3px solid #1E293B;
             border-radius: 38px;
             padding: 8px;
-            top: 60px;
-            right: 20%;
-            transform: rotate(12deg);
-            opacity: 0.7;
+            top: 50px;
+            right: 12%;
+            transform: rotate(10deg);
+            opacity: 0.65;
             z-index: 1;
         }
 
         .showcase-phone-back .showcase-phone-inner {
             border-radius: 30px;
+        }
+
+        @media (max-width: 991px) {
+            .phone-showcase-stage {
+                min-height: 480px;
+                margin-top: 20px;
+            }
+            .showcase-phone {
+                width: 220px;
+            }
+            .showcase-phone-back {
+                width: 180px;
+                right: auto;
+                left: 10%;
+                top: 30px;
+                transform: rotate(-8deg);
+            }
+        }
+
+        @media (max-width: 575px) {
+            .phone-showcase-stage {
+                min-height: 420px;
+            }
+            .showcase-phone {
+                width: 200px;
+            }
+            .showcase-phone-back {
+                display: none;
+            }
         }
 
         /* =============================================
@@ -2370,7 +2514,7 @@
                 <li><a href="#features" onclick="scrollToSection(event,'features')">Features</a></li>
                 <li><a href="#mobile-app" onclick="scrollToSection(event,'mobile-app')">Mobile App</a></li>
                 <li><a href="#how-it-works" onclick="scrollToSection(event,'how-it-works')">How it Works</a></li>
-                <li><a href="#testimonials" onclick="scrollToSection(event,'testimonials')">Reviews</a></li>
+                <li><a href="#showcase" onclick="scrollToSection(event,'showcase')">Demo</a></li>
             </ul>
 
             <div class="header-cta d-none d-lg-flex">
@@ -2390,7 +2534,7 @@
         <a href="#features" onclick="closeMobileNav();scrollToSection(event,'features')">Features</a>
         <a href="#mobile-app" onclick="closeMobileNav();scrollToSection(event,'mobile-app')">Mobile App</a>
         <a href="#how-it-works" onclick="closeMobileNav();scrollToSection(event,'how-it-works')">How it Works</a>
-        <a href="#testimonials" onclick="closeMobileNav();scrollToSection(event,'testimonials')">Reviews</a>
+        <a href="#showcase" onclick="closeMobileNav();scrollToSection(event,'showcase')">Demo</a>
         <button class="btn-demo" data-bs-toggle="modal" data-bs-target="#requestDemo" onclick="closeMobileNav()">Request a Demo</button>
     </nav>
 
@@ -2546,14 +2690,39 @@
 
                     <!-- Stat card 1 -->
                     <div class="bento-card card-stat" data-aos="fade-up" data-aos-delay="150">
-                        <div class="stat-big">24h</div>
-                        <div class="stat-desc">Average time from assessment to certified result</div>
+                        <div class="stat-top">
+                            <span class="stat-label-tag"><i class="bi bi-lightning-charge-fill"></i>Speed</span>
+                            <div class="stat-icon-circle"><i class="bi bi-clock-history"></i></div>
+                        </div>
+                        <div>
+                            <div class="stat-big">24h</div>
+                            <div class="stat-desc">Assessment to certified result — every time.</div>
+                        </div>
+                        <div class="stat-bottom">
+                            <span class="trend-badge"><i class="bi bi-arrow-down"></i>93% faster</span>
+                            <span>vs. paper</span>
+                        </div>
                     </div>
 
                     <!-- Stat card 2 -->
                     <div class="bento-card card-stat" data-aos="fade-up" data-aos-delay="200">
-                        <div class="stat-big">800K</div>
-                        <div class="stat-desc">Pages of paperwork eliminated per year</div>
+                        <div class="stat-top">
+                            <span class="stat-label-tag"><i class="bi bi-tree-fill"></i>Impact</span>
+                            <div class="stat-icon-circle"><i class="bi bi-file-earmark-text"></i></div>
+                        </div>
+                        <div>
+                            <div class="stat-big">800K</div>
+                            <div class="stat-desc">Pages of paperwork eliminated every year.</div>
+                        </div>
+                        <div class="stat-bars">
+                            <div class="stat-bar" style="height: 40%;"></div>
+                            <div class="stat-bar" style="height: 55%;"></div>
+                            <div class="stat-bar" style="height: 45%;"></div>
+                            <div class="stat-bar bar-highlight" style="height: 70%;"></div>
+                            <div class="stat-bar bar-highlight" style="height: 85%;"></div>
+                            <div class="stat-bar bar-highlight" style="height: 95%;"></div>
+                            <div class="stat-bar bar-highlight" style="height: 100%;"></div>
+                        </div>
                     </div>
 
                     <!-- Feature: Mobile learning -->
@@ -2710,14 +2879,14 @@
                         </ul>
 
                         <div class="app-download-row">
-                            <a href="#" class="app-badge" aria-label="Download on the App Store">
+                            <a href="https://apps.apple.com/gb/app/smart-class-by-qualhub/id6470182477" target="_blank" rel="noopener" class="app-badge" aria-label="Download on the App Store">
                                 <i class="bi bi-apple"></i>
                                 <div class="app-badge-text">
                                     <small>Download on the</small>
                                     <strong>App Store</strong>
                                 </div>
                             </a>
-                            <a href="#" class="app-badge" aria-label="Get it on Google Play">
+                            <a href="https://play.google.com/store/apps/details?id=com.qualhub.app" target="_blank" rel="noopener" class="app-badge" aria-label="Get it on Google Play">
                                 <i class="bi bi-google-play"></i>
                                 <div class="app-badge-text">
                                     <small>Get it on</small>
@@ -2980,63 +3149,6 @@
                                         <img src="assets/images/digital-storage.png" class="img-fluid" alt="Digital Storage" style="max-height:340px">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- =============================================
-             TESTIMONIALS
-        ============================================= -->
-        <section class="testimonials-section section" id="testimonials">
-            <div class="container-xl container-fluid">
-                <div class="text-center" data-aos="fade-up">
-                    <div class="section-badge mx-auto">Loved by training providers</div>
-                    <h2 class="section-title">Trainers, centres and learners agree.</h2>
-                    <p class="section-subtitle">Here's what people using smart class™ every day have to say about it.</p>
-                </div>
-
-                <div class="testimonials-grid">
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="testimonial-stars">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        </div>
-                        <p class="testimonial-quote">"We used to spend two days a week just handling paperwork. With smart class™ the admin is basically gone — our trainers can actually focus on teaching now."</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">SR</div>
-                            <div class="testimonial-meta">
-                                <strong>Sarah Reynolds</strong>
-                                <small>Centre Manager · London Training Hub</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="testimonial-stars">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        </div>
-                        <p class="testimonial-quote">"The AI grading is genuinely useful. It flags the tricky answers for me and lets me approve the obvious ones in seconds. I'm marking a full cohort in under an hour."</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">JM</div>
-                            <div class="testimonial-meta">
-                                <strong>James Mensah</strong>
-                                <small>Lead Trainer · SecureLearn Academy</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="testimonial-stars">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        </div>
-                        <p class="testimonial-quote">"Passing my SIA course was easy with the app. Videos on the train, quizzes at lunch, and I got my results the next day. Best learning app I've used."</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">AK</div>
-                            <div class="testimonial-meta">
-                                <strong>Aisha Khan</strong>
-                                <small>Learner · Door Supervisor Course</small>
                             </div>
                         </div>
                     </div>
