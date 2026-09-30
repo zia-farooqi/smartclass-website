@@ -716,7 +716,7 @@
                 </div>
             </div>
             <div class="footer-bottom text-center text-lg-start">
-                © 2026 Qualhub Limited. All rights reserved. smart class™ is a product of Qualhub Limited.
+                © <span class="current-year">2026</span> Qualhub Limited. All rights reserved. smart class™ is a product of Qualhub Limited.
             </div>
         </div>
     </footer>
@@ -772,6 +772,11 @@
                 }
             };
             document.head.appendChild(script);
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.current-year').forEach(function (el) {
+            el.textContent = new Date().getFullYear();
         });
     </script>
 </body>

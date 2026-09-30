@@ -3215,7 +3215,7 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-8">
-                        &copy; 2025 Qualhub Limited. All rights reserved. smart class™ is a product of Qualhub Limited.
+                        &copy; <span class="current-year">2026</span> Qualhub Limited. All rights reserved. smart class™ is a product of Qualhub Limited.
                     </div>
                     <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
                         <span style="color: var(--text-muted); font-size: 0.8rem;">Made in the UK 🇬🇧</span>
@@ -3489,6 +3489,11 @@
             startAutoSwitchSC();
             // Cert tab will auto-switch only when that pane becomes active
             showCertTab(0);
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.current-year').forEach(function (el) {
+            el.textContent = new Date().getFullYear();
         });
     </script>
 </body>
