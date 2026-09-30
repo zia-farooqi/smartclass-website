@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Dependencies, secrets and logs (in case tooling is added later)
+node_modules/
+.env
+.env.*
+*.log
